@@ -9,6 +9,7 @@ use App\Models\Book;
 use App\Http\Resources\BookResource;
 use App\Libraries\AmazonSMSProvider;
 use App\Libraries\InfopipSMSProvider;
+use App\Exceptions\CustomException;
 
 
 class BookRecommendorController extends Controller
@@ -37,7 +38,7 @@ class BookRecommendorController extends Controller
         // $SMSProvider = new AmazonSMSProvider('anonymous', 'mEwUoo21UNSfSpLgXqhmG0pPNDa0');
         // $SMSProvider->SMS("Thank you for your feedback");
 
-
+        throw new CustomException('Exception Caught:: Data Not Saved', 400); 
         $SMSProvider = new InfopipSMSProvider('anonymous', 'password', 'mEwUoo21UNSfSpLgXqhmG0pPNDa0');
         $SMSProvider->SMS("Thank you for your feedback");
 

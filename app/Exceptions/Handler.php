@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Exceptions\CustomException;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -34,8 +36,21 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (CustomException $e, $request) {
+            if ($request->is('api/*')) {
+
+                // log error
+                Log::error(
+                    "[Error Code] -> "     . $e->getCode() . 
+                    " [Error Message] -> " . $e->getMessage() 
+                );
+
+                // return json response insted of html page
+                return response()->json([
+                    'message'    => $e->getMessage(),
+                    'code'       => $e->getCode()
+                ], 400);
+            }
         });
     }
 }
