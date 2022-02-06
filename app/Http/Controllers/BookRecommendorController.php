@@ -7,8 +7,7 @@ use App\Http\Requests\SubmitReadingIntervalRequest;
 use App\Models\PageRead;
 use App\Models\Book;
 use App\Http\Resources\BookResource;
-use App\Libraries\AmazonSMSProvider;
-use App\Libraries\InfopipSMSProvider;
+use App\Libraries\SMSGeneric;
 use App\Exceptions\CustomException;
 
 
@@ -30,17 +29,15 @@ class BookRecommendorController extends Controller
         $PageRead->start_page = $request->start_page;
         $PageRead->end_page   = $request->end_page;
 
-        $PageRead->save();
+        $saved = $PageRead->save();
 
-        // the credentials should be put in .env file
-        // but for ease of use and it will not be commited 
-        // it is hard coded in this class.
-        // $SMSProvider = new AmazonSMSProvider('anonymous', 'mEwUoo21UNSfSpLgXqhmG0pPNDa0');
-        // $SMSProvider->SMS("Thank you for your feedback");
+        if(!$saved){
+            throw new CustomException('Exception Caught:: Data Not Saved', 400); 
+        }
 
-        throw new CustomException('Exception Caught:: Data Not Saved', 400); 
-        $SMSProvider = new InfopipSMSProvider('anonymous', 'password', 'mEwUoo21UNSfSpLgXqhmG0pPNDa0');
-        $SMSProvider->SMS("Thank you for your feedback");
+        SMSGeneric::SMSSendGeneric('Infopip', 'Thanks for your submission.');
+        // or other sms provider
+        // SMSGeneric::SMSSendGeneric('Amazon', 'Thanks for your submission.');
 
         return response()->json([
             'status'  => 200,
