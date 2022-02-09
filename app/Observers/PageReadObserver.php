@@ -4,6 +4,8 @@ namespace App\Observers;
 
 use App\Models\PageRead;
 use App\Models\Book;
+use Illuminate\Support\Str;
+
 
 class PageReadObserver
 {
@@ -15,15 +17,20 @@ class PageReadObserver
      */
     public function created(PageRead $pageRead)
     {
-        $PagesInterval = PageRead::where('book_id', $pageRead->book_id)->get();
+        $Book = Book::find($pageRead->book_id);
 
-        $PageRanges = $PagesInterval->map(function ($item, $key) {
-            return collect()->range($item->start_page, $item->end_page);
-        });
+        if( $Book->read_pages_interval == "" ) {
+            $FinalCollection    = collect()->range($pageRead->start_page, $pageRead->end_page);
+        } else {
+            $DatabaseCollection = Str::of($Book->read_pages_interval)->explode(', ');
+            $RangeCollection    = collect()->range($pageRead->start_page, $pageRead->end_page);
 
-        $readPages = $PageRanges->collapse()->unique()->count();
+            $FinalCollection    = $DatabaseCollection->merge($RangeCollection)->unique()->sort();
+        }
 
-        $PagesInterval = Book::where('id', $pageRead->book_id)->update(['read_pages_num' => $readPages]);
+        $Book->read_pages_num      = $FinalCollection->implode(', ');
+        $Book->read_pages_interval = $FinalCollection->count();
+        $Book->save();
     }
 
     /**

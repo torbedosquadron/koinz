@@ -18,6 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->integer('pages_num');
             $table->integer('read_pages_num');
+            $table->text('read_pages_interval');
             $table->timestamps();
         });
     }

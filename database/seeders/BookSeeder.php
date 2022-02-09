@@ -19,6 +19,7 @@ class BookSeeder extends Seeder
                 "name" => "Introduction to Algorithms ", 
                 "pages_num" => 100, 
                 "read_pages_num" => 0,
+                "read_pages_interval" => '',
                 "created_at" => now(),
                 "updated_at" => now()
             ],
@@ -26,6 +27,7 @@ class BookSeeder extends Seeder
                 "name" => "Algorithms Unplugged", 
                 "pages_num" => 50,
                 "read_pages_num" => 0,
+                "read_pages_interval" => '',
                 "created_at" => now(),
                 "updated_at" => now()
             ],
@@ -33,6 +35,7 @@ class BookSeeder extends Seeder
                 "name" => "Grokking Algorithms", 
                 "pages_num" => 20,
                 "read_pages_num" => 0,
+                "read_pages_interval" => '',
                 "created_at" => now(),
                 "updated_at" => now()
             ],
@@ -40,6 +43,7 @@ class BookSeeder extends Seeder
                 "name" => "Head First Object-Oriented Design and Analysis", 
                 "pages_num" => 200,
                 "read_pages_num" => 0,
+                "read_pages_interval" => '',
                 "created_at" => now(),
                 "updated_at" => now()
             ],
@@ -47,6 +51,7 @@ class BookSeeder extends Seeder
                 "name" => "Clean Code", 
                 "pages_num" => 150,
                 "read_pages_num" => 0,
+                "read_pages_interval" => '',
                 "created_at" => now(),
                 "updated_at" => now()
             ],
@@ -54,6 +59,7 @@ class BookSeeder extends Seeder
                 "name" => "Patterns of Enterprise Applications", 
                 "pages_num" => 2000,
                 "read_pages_num" => 0,
+                "read_pages_interval" => '',
                 "created_at" => now(),
                 "updated_at" => now()
             ],
@@ -61,6 +67,7 @@ class BookSeeder extends Seeder
                 "name" => "Refactoring", 
                 "pages_num" => 1000,
                 "read_pages_num" => 0,
+                "read_pages_interval" => '',
                 "created_at" => now(),
                 "updated_at" => now()
             ],
